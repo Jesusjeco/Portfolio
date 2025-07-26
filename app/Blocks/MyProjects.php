@@ -5,28 +5,28 @@ namespace App\Blocks;
 use Log1x\AcfComposer\Block;
 use Log1x\AcfComposer\Builder;
 
-class MySkills extends Block
+class MyProjects extends Block
 {
     /**
      * The block name.
      *
      * @var string
      */
-    public $name = 'My Skills';
+    public $name = 'My Projects';
 
     /**
      * The block description.
      *
      * @var string
      */
-    public $description = 'List of skills with icon and name';
+    public $description = 'Web projects from recent and old times';
 
     /**
      * The block category.
      *
      * @var string
      */
-    public $category = 'media';
+    public $category = 'design';
 
     /**
      * The block icon.
@@ -116,7 +116,7 @@ class MySkills extends Block
         'multiple' => true,
         'jsx' => true,
         'color' => [
-            'background' => false,
+            'background' => true,
             'text' => false,
             'gradients' => false,
         ],
@@ -140,34 +140,9 @@ class MySkills extends Block
     {
         return [
             'title' => get_field('title'),
-            'skills' => $this->skills(),
+            'description' => get_field('description'),
+            'projects' => get_field('projects'),
         ];
-    }
-
-    /**
-     * Process skills repeater field to return only icon IDs and process badges.
-     */
-    public function skills(): array
-    {
-        $skills = get_field('skills') ?: [];
-        
-        return array_map(function ($skill) {
-            // Process badges repeater
-            $badges = [];
-            if (isset($skill['badges']) && is_array($skill['badges'])) {
-                $badges = array_map(function ($badge) {
-                    return [
-                        'name' => $badge['name'] ?? '',
-                    ];
-                }, $skill['badges']);
-            }
-
-            return [
-                'name' => $skill['name'] ?? '',
-                'icon' => is_array($skill['icon']) ? $skill['icon']['ID'] : $skill['icon'],
-                'badges' => $badges,
-            ];
-        }, $skills);
     }
 
     /**
@@ -175,16 +150,14 @@ class MySkills extends Block
      */
     public function fields(): array
     {
-        $fields = Builder::make('my_skills');
+        $fields = Builder::make('my_projects');
 
         $fields
             ->addText('title')
-            ->addRepeater('skills')
-                ->addImage('icon')
-                ->addText('name')
-                ->addRepeater('badges')
-                    ->addText('name')
-                ->endRepeater()
+            ->addText('description')
+            ->addRepeater('projects')
+                ->addLink('link')
+                ->addImage('logo')
             ->endRepeater();
 
         return $fields->build();

@@ -1,3 +1,5 @@
+<div id="top-header-separator" class="top-header-separator">
+</div>
 <x-container>
 		<div {{ $attributes->merge(['class' => 'flex flex-col lg:flex-row items-center gap-8']) }}>
 
@@ -9,7 +11,7 @@
 						@endif
 				</div>
 
-				<div class="flex lg:max-w-[500px] flex-col gap-6">
+				<div class="flex flex-col gap-6 lg:max-w-[500px]">
 						@if ($title || $description)
 								<div class="flex h-10 w-10 items-center justify-start">
 										<svg width="800px" height="800px" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"
@@ -103,12 +105,20 @@
 
 				</div>
 
-
-				@if (have_rows('inner_blocks') || !empty(get_field('inner_blocks')) || !empty($block->inner_blocks))
-						<div>
-								<InnerBlocks />
-						</div>
-				@endif
-
 		</div>
 </x-container>
+
+@script
+document.addEventListener('DOMContentLoaded', () => {
+	function updateSeparatorHeight() {
+    const separator = document.getElementById('top-header-separator');
+    const mainHeader = document.getElementById('main-header');
+    if (mainHeader && separator) {
+        separator.style.height = (mainHeader.offsetHeight + 20) + 'px';
+    }
+	}
+    updateSeparatorHeight();
+    window.addEventListener('resize', updateSeparatorHeight);
+		window.addEventListener('load', updateSeparatorHeight);
+});
+@endscript

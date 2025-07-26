@@ -111,7 +111,7 @@ class WhatsUp extends Block
         'align_text' => false,
         'align_content' => false,
         'full_height' => false,
-        'anchor' => false,
+        'anchor' => true,
         'mode' => true,
         'multiple' => true,
         'jsx' => true,

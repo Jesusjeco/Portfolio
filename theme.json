@@ -16,7 +16,14 @@
       "defaultDuotone": false,
       "defaultGradients": false,
       "defaultPalette": false,
-      "duotone": []
+      "duotone": [],
+      "palette": [
+        {
+          "name": "Dark Blue",
+          "slug": "dark-blue",
+          "color": "#1E1E1E"
+        }
+      ]
     },
     "custom": {
       "spacing": {},
