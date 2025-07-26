@@ -5,21 +5,21 @@ namespace App\Blocks;
 use Log1x\AcfComposer\Block;
 use Log1x\AcfComposer\Builder;
 
-class TextAndRightIcon extends Block
+class MyExperience extends Block
 {
     /**
      * The block name.
      *
      * @var string
      */
-    public $name = 'Text And Right Icon';
+    public $name = 'My Experience';
 
     /**
      * The block description.
      *
      * @var string
      */
-    public $description = 'Simple block with title, description and icon to the right';
+    public $description = 'job Experience';
 
     /**
      * The block category.
@@ -68,7 +68,7 @@ class TextAndRightIcon extends Block
      *
      * @var string
      */
-    public $mode = 'preview';
+    public $mode = 'edit';
 
     /**
      * The default block alignment.
@@ -111,7 +111,7 @@ class TextAndRightIcon extends Block
         'align_text' => false,
         'align_content' => false,
         'full_height' => false,
-        'anchor' => true,
+        'anchor' => false,
         'mode' => true,
         'multiple' => true,
         'jsx' => true,
@@ -139,9 +139,7 @@ class TextAndRightIcon extends Block
     public function with(): array
     {
         return [
-            'title' => get_field('title'),
-            'description' => get_field('description'),
-            'icon' => get_field('icon',false,false),
+            
         ];
     }
 
@@ -150,12 +148,11 @@ class TextAndRightIcon extends Block
      */
     public function fields(): array
     {
-        $fields = Builder::make('text_and_right_icon');
+        $fields = Builder::make('my_experience');
 
         $fields
-            ->addText('title')
-            ->addWysiwyg('description')
-            ->addImage('icon');
+        ->addMessage('message', 'this ACF block is only used to render the Blade Component My Experience')
+            ;
 
         return $fields->build();
     }

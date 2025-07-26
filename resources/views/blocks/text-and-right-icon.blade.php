@@ -1,8 +1,8 @@
 <x-container>
-		<div class="grid lg:grid-cols-4 gap-4 mt-10 items-center">
+		<div class="grid lg:grid-cols-4 gap-4 items-center">
 				<div class="lg:col-span-3">
 						@if ($title)
-								<h2 class="font-bold text-4xl pb-4">{{ $title }}</h2>
+								<h2>{{ $title }}</h2>
 						@endif
 						@if ($description)
 								{!! $description !!}

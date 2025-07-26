@@ -5,28 +5,28 @@ namespace App\Blocks;
 use Log1x\AcfComposer\Block;
 use Log1x\AcfComposer\Builder;
 
-class TextAndRightIcon extends Block
+class MySkills extends Block
 {
     /**
      * The block name.
      *
      * @var string
      */
-    public $name = 'Text And Right Icon';
+    public $name = 'My Skills';
 
     /**
      * The block description.
      *
      * @var string
      */
-    public $description = 'Simple block with title, description and icon to the right';
+    public $description = 'List of skills with icon and name';
 
     /**
      * The block category.
      *
      * @var string
      */
-    public $category = 'text';
+    public $category = 'media';
 
     /**
      * The block icon.
@@ -111,7 +111,7 @@ class TextAndRightIcon extends Block
         'align_text' => false,
         'align_content' => false,
         'full_height' => false,
-        'anchor' => true,
+        'anchor' => false,
         'mode' => true,
         'multiple' => true,
         'jsx' => true,
@@ -140,9 +140,34 @@ class TextAndRightIcon extends Block
     {
         return [
             'title' => get_field('title'),
-            'description' => get_field('description'),
-            'icon' => get_field('icon',false,false),
+            'skills' => $this->skills(),
         ];
+    }
+
+    /**
+     * Process skills repeater field to return only icon IDs and process badges.
+     */
+    public function skills(): array
+    {
+        $skills = get_field('skills') ?: [];
+        
+        return array_map(function ($skill) {
+            // Process badges repeater
+            $badges = [];
+            if (isset($skill['badges']) && is_array($skill['badges'])) {
+                $badges = array_map(function ($badge) {
+                    return [
+                        'name' => $badge['name'] ?? '',
+                    ];
+                }, $skill['badges']);
+            }
+
+            return [
+                'name' => $skill['name'] ?? '',
+                'icon' => is_array($skill['icon']) ? $skill['icon']['ID'] : $skill['icon'],
+                'badges' => $badges,
+            ];
+        }, $skills);
     }
 
     /**
@@ -150,12 +175,17 @@ class TextAndRightIcon extends Block
      */
     public function fields(): array
     {
-        $fields = Builder::make('text_and_right_icon');
+        $fields = Builder::make('my_skills');
 
         $fields
             ->addText('title')
-            ->addWysiwyg('description')
-            ->addImage('icon');
+            ->addRepeater('skills')
+                ->addImage('icon')
+                ->addText('name')
+                ->addRepeater('badges')
+                    ->addText('name')
+                ->endRepeater()
+            ->endRepeater();
 
         return $fields->build();
     }

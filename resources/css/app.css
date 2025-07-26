@@ -39,6 +39,10 @@ h6,
   font-family: var(--font-family-serif-3);
 }
 
+h2,.h2{
+  @apply pb-4 text-4xl font-bold;
+}
+
 html,
 body {
   @apply font-sans bg-[#252c34] text-white;
