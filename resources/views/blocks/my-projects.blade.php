@@ -7,12 +7,12 @@
 						<p>{{ $description }}</p>
 				@endif
 				@if ($projects)
-						<div class="grid grid-cols-2 gap-4 pt-4 md:grid-cols-3 lg:grid-cols-4">
+						<div class="grid gap-4 pt-4 projects-cards">
 								@foreach ($projects as $project)
 										<a href="{{ $project['link']['url'] }}" target="{{ $project['link']['target'] }}"
 												class="rounded bg-white shadow">
 												<img src="{{ $project['logo']['url'] }}" alt="{{ $project['link']['title'] }}"
-														class="block h-[60px] w-[175px] object-contain p-2">
+														class="block h-[60px] w-[175px] object-contain p-2 mx-auto">
 										</a>
 								@endforeach
 						</div>
